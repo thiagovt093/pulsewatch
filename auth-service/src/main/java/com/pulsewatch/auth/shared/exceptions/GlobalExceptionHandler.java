@@ -116,4 +116,18 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
     }
+
+    @ExceptionHandler(TokenNotFound.class)
+    public ResponseEntity<StandardError> handleTokenNotFound(
+            TokenNotFound ex, HttpServletRequest request) {
+        StandardError error = new StandardError(
+                "Not Found",
+                HttpStatus.NOT_FOUND.value(),
+                ex.getMessage(),
+                request.getRequestURI(),
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
 }

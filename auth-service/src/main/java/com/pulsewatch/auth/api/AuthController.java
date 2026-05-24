@@ -1,8 +1,10 @@
 package com.pulsewatch.auth.api;
 
 import com.pulsewatch.auth.application.usecases.LoginUseCase;
+import com.pulsewatch.auth.application.usecases.RefreshTokenUseCase;
 import com.pulsewatch.auth.application.usecases.RegisterUserUseCase;
 import com.pulsewatch.auth.dto.request.LoginRequest;
+import com.pulsewatch.auth.dto.request.RefreshRequest;
 import com.pulsewatch.auth.dto.request.RegisterRequest;
 import com.pulsewatch.auth.dto.response.AuthResponse;
 import com.pulsewatch.auth.dto.response.UserResponse;
@@ -22,6 +24,7 @@ public class AuthController {
 
     private final RegisterUserUseCase registerUserUseCase;
     private final LoginUseCase loginUseCase;
+    private final RefreshTokenUseCase refreshTokenUseCase;
 
     @PostMapping("/register")
     public ResponseEntity<UserResponse> register(@RequestBody @Valid RegisterRequest request) {
@@ -32,6 +35,12 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody @Valid LoginRequest request) {
         AuthResponse response = loginUseCase.execute(request);
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<AuthResponse> refresh(@RequestBody @Valid RefreshRequest request){
+        AuthResponse response = refreshTokenUseCase.execute(request);
         return ResponseEntity.ok(response);
     }
 }
