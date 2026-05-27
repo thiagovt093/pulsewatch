@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface IMonitoringCheckRepository {
+    MonitoringCheck save(MonitoringCheck monitoringCheck);
     List<MonitoringCheck>
     findTop50ByApiIdOrderByCheckedAtDesc(
             UUID apiId
