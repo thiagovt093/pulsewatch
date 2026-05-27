@@ -1,0 +1,6 @@
+package com.pulsewatch.monitoring_service.domain.enums;
+
+public enum HttpMethod {
+    GET, POST, PUT, DELETE, PATCH
+}
+

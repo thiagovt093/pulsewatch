@@ -23,6 +23,7 @@ public class JwtService {
             return JWT.create()
                     .withIssuer("auth-api")
                     .withSubject(user.getEmail())
+                    .withClaim("userId", user.getId().toString())
                     .withExpiresAt(getExpirationDate())
                     .sign(algorithm);
         } catch (JWTCreationException ex) {
