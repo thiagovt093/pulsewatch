@@ -36,3 +36,7 @@ build/
 *.class
 *.jar
 .idea/
+
+# Target dos serviços
+auth-service/target/
+monitoring-service/target/
