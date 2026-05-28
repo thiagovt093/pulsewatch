@@ -27,10 +27,10 @@ public class CreateApiUseCase {
                 .expectedStatusCode(request.expectedStatusCode())
                 .checkInterval(request.checkInterval())
                 .timeout(request.timeout())
-                .userId(userId)              // ← falta — vem do JWT
-                .active(true)                // ← falta — começa ativo
-                .currentStatus(ApiStatus.PAUSED)  // ← falta — começa pausado
-                .createdAt(LocalDateTime.now())   // ← falta
+                .userId(userId)
+                .active(true)
+                .currentStatus(ApiStatus.PAUSED)
+                .createdAt(LocalDateTime.now())
                 .build();
         MonitoredApi savedApi = monitoredApiRepository.save(monitoredApi);
 

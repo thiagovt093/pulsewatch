@@ -12,5 +12,9 @@ public interface MonitoringCheckRepository extends JpaRepository<MonitoringCheck
     findTop50ByApiIdOrderByCheckedAtDesc(
             UUID apiId
     );
+    List<MonitoringCheck> findByApiIdAndApiUserIdOrderByCheckedAtDesc(
+            UUID apiId,
+            UUID userId
+    );
 
 }

@@ -8,6 +8,7 @@ import java.util.UUID;
 
 public interface IMonitoredApiRepository {
     MonitoredApi save(MonitoredApi monitoredApi);
+    void deleteById(UUID id);
     List<MonitoredApi> findByUserId(UUID userId);
     List<MonitoredApi> findByActiveTrue();
     Optional<MonitoredApi> findByIdAndUserId(UUID id, UUID userId);

@@ -11,4 +11,8 @@ public interface IMonitoringCheckRepository {
     findTop50ByApiIdOrderByCheckedAtDesc(
             UUID apiId
     );
+    List<MonitoringCheck> findByApiIdAndApiUserIdOrderByCheckedAtDesc(
+            UUID apiId,
+            UUID userId
+    );
 }
