@@ -6,6 +6,7 @@ import com.pulsewatch.monitoring_service.domain.enums.HttpMethod;
 import com.pulsewatch.monitoring_service.domain.repositories.IMonitoredApiRepository;
 import com.pulsewatch.monitoring_service.dto.request.CreateApiRequest;
 import com.pulsewatch.monitoring_service.dto.response.ApiResponse;
+import com.pulsewatch.monitoring_service.shared.exceptions.UrlAlreadyExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +18,9 @@ import java.util.UUID;
 public class CreateApiUseCase {
     private final IMonitoredApiRepository monitoredApiRepository;
 
-    public ApiResponse execute(CreateApiRequest request, UUID userId){
-        if(monitoredApiRepository.existsByName(request.url())) throw new RuntimeException("Url já cadastrada!");
-
+    public ApiResponse execute(CreateApiRequest request, UUID userId) {
+        if (monitoredApiRepository.existsByUrl(request.url()))
+            throw new UrlAlreadyExistsException("URL já cadastrada");
         MonitoredApi monitoredApi = MonitoredApi.builder()
                 .name(request.name())
                 .url(request.url())

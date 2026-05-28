@@ -20,5 +20,6 @@ public interface MonitoredApiRepository extends JpaRepository<MonitoredApi, UUID
     );
     Optional<MonitoredApi> findByName(String url);
     boolean existsByName(String url);
+    boolean existsByUrl(String url);
 
 }

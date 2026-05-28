@@ -5,6 +5,7 @@ import com.pulsewatch.monitoring_service.domain.enums.HttpMethod;
 import com.pulsewatch.monitoring_service.domain.repositories.IMonitoredApiRepository;
 import com.pulsewatch.monitoring_service.dto.request.UpdateApiRequest;
 import com.pulsewatch.monitoring_service.dto.response.ApiResponse;
+import com.pulsewatch.monitoring_service.shared.exceptions.ApiNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ public class UpdateApiUseCase {
 
     public ApiResponse execute(UUID apiId, UUID userId, UpdateApiRequest request) {
         MonitoredApi monitoredApi = monitoredApiRepository.findByIdAndUserId(apiId, userId)
-                .orElseThrow(() -> new RuntimeException("API não encontrada"));
+                .orElseThrow(() -> new ApiNotFoundException("API não encontrada"));
 
         monitoredApi.setName(request.name());
         monitoredApi.setUrl(request.url());

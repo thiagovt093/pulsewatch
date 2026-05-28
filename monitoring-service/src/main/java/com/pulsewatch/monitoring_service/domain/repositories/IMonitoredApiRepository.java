@@ -14,4 +14,5 @@ public interface IMonitoredApiRepository {
     Optional<MonitoredApi> findByIdAndUserId(UUID id, UUID userId);
     Optional<MonitoredApi> findByName(String name);
     boolean existsByName(String name);
+    boolean existsByUrl(String url);
 }
