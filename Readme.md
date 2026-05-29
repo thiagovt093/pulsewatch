@@ -20,6 +20,7 @@ Inspirado em plataformas como Datadog, UptimeRobot e New Relic.
 pulsewatch/
  ├── auth-service/          Autenticação e identidade
  ├── monitoring-service/    Monitoramento de APIs
+ ├── frontend/              Dashboard
  ├── incident-service/      (futuro)
  ├── notification-service/  (futuro)
  └── analytics-service/     (futuro)
@@ -88,6 +89,17 @@ Isso vai subir automaticamente:
 - auth-service na porta 8080
 - monitoring-service na porta 8081
 
+### 4. Rode o Frontend
+
+```bash
+npm run dev
+```
+
+Isso vai subir automaticamente:
+- PostgreSQL com os dois bancos criados
+- auth-service na porta 8080
+- monitoring-service na porta 8081
+- frontend na porta 3000
 ---
 
 ## 📡 Serviços
@@ -154,6 +166,7 @@ Responsável por monitoramento de APIs.
 - [x] Docker + Docker Compose
 
 ### Fase 2 — Frontend 🚧
+- [x] Landing Page
 - [ ] Dashboard React + TypeScript
 - [ ] Login e cadastro
 - [ ] Listagem de APIs monitoradas
