@@ -11,30 +11,35 @@ import {
   CircleNotchIcon,
   LockIcon,
   EnvelopeIcon,
+  UserIcon,
 } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { authService } from "@/services/auth.service";
 
-export default function LoginPage() {
+export default function RegisterPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [name, setName] = useState("");
 
-  async function handleLogin(e: React.SyntheticEvent<HTMLFormElement>) {
+  async function handleRegister(e: React.SyntheticEvent<HTMLFormElement>) {
     e.preventDefault();
     setError("");
     setLoading(true);
 
     try {
-      const data = await authService.login(email, password);
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("refreshToken", data.refreshToken);
-      router.push("/dashboard");
+      if (password !== confirmPassword) {
+        setError("As senhas não coincidem");
+        return;
+      }
+      await authService.register(name, email, password);
+      router.push("/login");
     } catch (err: unknown) {
       let message = "Credenciais inválidas";
 
@@ -46,11 +51,13 @@ export default function LoginPage() {
         "response" in err &&
         typeof (err as { response?: unknown }).response === "object" &&
         (err as { response: { data?: unknown } }).response.data !== undefined &&
-        typeof (err as { response: { data?: unknown } }).response.data === "object" &&
+        typeof (err as { response: { data?: unknown } }).response.data ===
+          "object" &&
         (err as { response: { data?: unknown } }).response.data !== null
       ) {
-        const responseData =
-          (err as { response: { data: { message?: unknown } } }).response.data;
+        const responseData = (
+          err as { response: { data: { message?: unknown } } }
+        ).response.data;
 
         if (
           "message" in responseData &&
@@ -78,7 +85,7 @@ export default function LoginPage() {
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="w-full max-w-lg"
+        className="w-full max-w-md"
       >
         {/* Logo */}
         <div className="mb-8 flex flex-col items-center gap-3">
@@ -87,22 +94,44 @@ export default function LoginPage() {
           </div>
           <div className="text-center">
             <h1 className="text-2xl font-black">Pulse Watch</h1>
-            <p className="text-sm text-muted-foreground">
-              Acesse sua conta
-            </p>
+            <p className="text-sm text-muted-foreground">Crie sua conta</p>
           </div>
         </div>
 
         {/* Card */}
         <div className="rounded-3xl border border-white/[0.08] bg-white/[0.03] p-10 backdrop-blur-xl ring-1 ring-inset ring-white/5">
-          <form onSubmit={handleLogin} className="space-y-5">
+          <form onSubmit={handleRegister} className="space-y-5">
+            {/* Nome */}
+            <div className="space-y-2">
+              <Label htmlFor="name">Nome</Label>
+              <div className="relative">
+                <UserIcon
+                  size={20}
+                  weight="regular"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                />
+                <Input
+                  id="name"
+                  type="text"
+                  placeholder="Seu nome"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="border-white/10 bg-white/5 pl-10 placeholder:text-muted-foreground/50 focus:border-orange-500/50 focus:ring-orange-500/20"
+                  required
+                />
+              </div>
+            </div>
             {/* Email */}
             <div className="space-y-2">
               <Label htmlFor="email" className="text-sm text-muted-foreground">
                 Email
               </Label>
               <div className="relative">
-                <EnvelopeIcon size={20} weight="regular" className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                <EnvelopeIcon
+                  size={20}
+                  weight="regular"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                />
                 <Input
                   id="email"
                   type="email"
@@ -117,11 +146,18 @@ export default function LoginPage() {
 
             {/* Senha */}
             <div className="space-y-2">
-              <Label htmlFor="password" className="text-sm text-muted-foreground">
+              <Label
+                htmlFor="password"
+                className="text-sm text-muted-foreground"
+              >
                 Senha
               </Label>
               <div className="relative">
-                <LockIcon size={20} weight="regular" className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                <LockIcon
+                  size={20}
+                  weight="regular"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                />
                 <Input
                   id="password"
                   type={showPassword ? "text" : "password"}
@@ -136,7 +172,48 @@ export default function LoginPage() {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-white"
                 >
-                  {showPassword ? <EyeSlashIcon size={20} weight="regular" /> : <EyeIcon size={20} weight="regular" />}
+                  {showPassword ? (
+                    <EyeSlashIcon size={20} weight="regular" />
+                  ) : (
+                    <EyeIcon size={20} weight="regular" />
+                  )}
+                </button>
+              </div>
+            </div>
+
+            {/* Repita sua Senha*/}
+            <div className="space-y-2">
+              <Label
+                htmlFor="confirmPassword"
+                className="text-sm text-muted-foreground"
+              >
+                Repita sua Senha
+              </Label>
+              <div className="relative">
+                <LockIcon
+                  size={20}
+                  weight="regular"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                />
+                <Input
+                  id="confirmPassword"
+                  type={showPassword ? "text" : "password"}
+                  placeholder="••••••••"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="border-white/10 bg-white/5 pl-10 pr-10 placeholder:text-muted-foreground/50 focus:border-orange-500/50 focus:ring-orange-500/20"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-white"
+                >
+                  {showPassword ? (
+                    <EyeSlashIcon size={20} weight="regular" />
+                  ) : (
+                    <EyeIcon size={20} weight="regular" />
+                  )}
                 </button>
               </div>
             </div>
@@ -159,20 +236,24 @@ export default function LoginPage() {
               className="w-full rounded-xl bg-orange-500 text-black hover:bg-orange-400 disabled:opacity-50"
             >
               {loading ? (
-                <CircleNotchIcon size={20} weight="regular" className="animate-spin" />
+                <CircleNotchIcon
+                  size={20}
+                  weight="regular"
+                  className="animate-spin"
+                />
               ) : (
-                "Entrar"
+                "Criar conta"
               )}
             </Button>
           </form>
 
           <div className="mt-6 text-center text-sm text-muted-foreground">
-            Não tem conta?{" "}
+            Já tem uma conta?{" "}
             <Link
-              href="/register"
+              href="/login"
               className="text-orange-400 hover:text-orange-300 hover:underline"
             >
-              Criar conta
+              Entrar
             </Link>
           </div>
         </div>

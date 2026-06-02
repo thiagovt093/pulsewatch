@@ -135,12 +135,12 @@ export default function HomePage() {
           </nav>
 
           <div className="flex items-center gap-3">
-            <Button variant="ghost" className="hidden text-sm md:flex">
-              Login
+            <Button asChild variant="ghost" className="hidden text-sm md:flex">
+              <Link href="/login">Login</Link>
             </Button>
 
-            <Button className="rounded-xl bg-orange-500 text-black hover:bg-orange-400">
-              Começar
+            <Button asChild className="rounded-xl bg-orange-500 text-black hover:bg-orange-400">
+              <Link href="/register">Começar</Link>
             </Button>
           </div>
         </div>
@@ -173,20 +173,15 @@ export default function HomePage() {
           </p>
 
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Button
-              size="lg"
-              className="group rounded-2xl bg-orange-500 px-8 text-black hover:bg-orange-400"
-            >
-              Acessar dashboard
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+            <Button asChild size="lg" className="group rounded-2xl bg-orange-500 px-8 text-black hover:bg-orange-400">
+              <Link href="/dashboard">
+                Acessar dashboard
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </Link>
             </Button>
 
-            <Button
-              size="lg"
-              variant="outline"
-              className="rounded-2xl border-white/10 bg-white/5 backdrop-blur-xl"
-            >
-              Ver demonstração
+            <Button asChild size="lg" variant="outline" className="rounded-2xl border-white/10 bg-white/5 backdrop-blur-xl">
+              <Link href="#dashboard">Ver demonstração</Link>
             </Button>
           </div>
         </motion.div>
@@ -354,11 +349,8 @@ export default function HomePage() {
             </div>
 
             <div className="relative z-10">
-              <Button
-                size="lg"
-                className="rounded-2xl bg-orange-500 px-8 text-black hover:bg-orange-400"
-              >
-                Começar agora
+              <Button asChild size="lg" className="rounded-2xl bg-orange-500 px-8 text-black hover:bg-orange-400">
+                <Link href="/register">Começar agora</Link>
               </Button>
             </div>
           </CardContent>
