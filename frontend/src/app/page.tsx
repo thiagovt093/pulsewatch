@@ -89,9 +89,9 @@ export default function HomePage() {
     <main className="relative overflow-hidden bg-background">
       {/* Background Glow */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute left-0 top-0 h-[500px] w-[500px] rounded-full bg-orange-500/20 blur-3xl" />
-
-        <div className="absolute bottom-0 right-0 h-[500px] w-[500px] rounded-full bg-orange-400/10 blur-3xl" />
+        <div className="absolute left-[-10%] top-[-10%] h-[600px] w-[600px] rounded-full bg-orange-500/30 blur-[120px]" />
+        <div className="absolute bottom-[-10%] right-[-10%] h-[600px] w-[600px] rounded-full bg-orange-400/20 blur-[120px]" />
+        <div className="absolute left-[40%] top-[30%] h-[300px] w-[300px] rounded-full bg-orange-600/10 blur-[80px]" />
       </div>
 
       {/* Navbar */}
@@ -103,9 +103,7 @@ export default function HomePage() {
             </div>
 
             <div>
-              <h1 className="text-lg font-bold tracking-tight">
-                Pulse Watch
-              </h1>
+              <h1 className="text-lg font-bold tracking-tight">Pulse Watch</h1>
 
               <p className="text-xs text-muted-foreground">
                 Monitoring Platform
@@ -137,10 +135,7 @@ export default function HomePage() {
           </nav>
 
           <div className="flex items-center gap-3">
-            <Button
-              variant="ghost"
-              className="hidden text-sm md:flex"
-            >
+            <Button variant="ghost" className="hidden text-sm md:flex">
               Login
             </Button>
 
@@ -173,8 +168,8 @@ export default function HomePage() {
           </h1>
 
           <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground md:text-xl">
-            Dashboard SaaS premium com monitoramento de APIs,
-            alertas, métricas em tempo real e uptime tracking.
+            Dashboard SaaS premium com monitoramento de APIs, alertas, métricas
+            em tempo real e uptime tracking.
           </p>
 
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -183,7 +178,6 @@ export default function HomePage() {
               className="group rounded-2xl bg-orange-500 px-8 text-black hover:bg-orange-400"
             >
               Acessar dashboard
-
               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Button>
 
@@ -209,9 +203,7 @@ export default function HomePage() {
               <div className="border-b border-white/10 p-5">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="text-lg font-semibold">
-                      Infraestrutura
-                    </h3>
+                    <h3 className="text-lg font-semibold">Infraestrutura</h3>
 
                     <p className="text-sm text-muted-foreground">
                       Status dos serviços monitorados
@@ -240,9 +232,7 @@ export default function HomePage() {
                       />
 
                       <div>
-                        <h4 className="font-medium">
-                          {service.name}
-                        </h4>
+                        <h4 className="font-medium">{service.name}</h4>
 
                         <p className="text-sm text-muted-foreground">
                           Latência: {service.latency}
@@ -294,9 +284,7 @@ export default function HomePage() {
                       {stat.title}
                     </p>
 
-                    <h3 className="text-3xl font-black">
-                      {stat.value}
-                    </h3>
+                    <h3 className="text-3xl font-black">{stat.value}</h3>
                   </div>
                 </CardContent>
               </Card>
@@ -306,10 +294,7 @@ export default function HomePage() {
       </section>
 
       {/* Features */}
-      <section
-        id="features"
-        className="mx-auto max-w-7xl px-6 py-24"
-      >
+      <section id="features" className="mx-auto max-w-7xl px-6 py-24">
         <div className="mb-14 text-center">
           <h2 className="text-4xl font-black md:text-5xl">
             Recursos poderosos
@@ -332,15 +317,13 @@ export default function HomePage() {
                 transition={{ delay: index * 0.1 }}
                 viewport={{ once: true }}
               >
-                <Card className="group h-full rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:border-orange-500/30 hover:bg-orange-500/5 hover:shadow-2xl hover:shadow-orange-500/10">
+                <Card className="group h-full rounded-3xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-xl ring-1 ring-inset ring-white/5 transition-all duration-300 hover:-translate-y-1 hover:border-orange-500/30 hover:bg-orange-500/[0.05] hover:shadow-2xl hover:shadow-orange-500/10 hover:ring-orange-500/20">
                   <CardContent className="p-6">
                     <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl border border-orange-500/20 bg-orange-500/10">
                       <Icon className="h-6 w-6 text-orange-400" />
                     </div>
 
-                    <h3 className="mb-3 text-xl font-bold">
-                      {feature.title}
-                    </h3>
+                    <h3 className="mb-3 text-xl font-bold">{feature.title}</h3>
 
                     <p className="leading-relaxed text-muted-foreground">
                       {feature.description}
@@ -365,8 +348,8 @@ export default function HomePage() {
               </h2>
 
               <p className="mt-4 max-w-2xl text-lg text-orange-100/80">
-                Tenha total controle da sua infraestrutura com uma
-                plataforma rápida, moderna e elegante.
+                Tenha total controle da sua infraestrutura com uma plataforma
+                rápida, moderna e elegante.
               </p>
             </div>
 
@@ -392,9 +375,7 @@ export default function HomePage() {
               </div>
 
               <div>
-                <h3 className="text-lg font-bold">
-                  Pulse Watch
-                </h3>
+                <h3 className="text-lg font-bold">Pulse Watch</h3>
 
                 <p className="text-sm text-muted-foreground">
                   Plataforma moderna de observabilidade
@@ -403,9 +384,8 @@ export default function HomePage() {
             </div>
 
             <p className="mt-5 max-w-md leading-relaxed text-muted-foreground">
-              Monitore APIs, microsserviços e infraestrutura em
-              tempo real com uma experiência premium e ultra
-              performática.
+              Monitore APIs, microsserviços e infraestrutura em tempo real com
+              uma experiência premium e ultra performática.
             </p>
 
             <div className="mt-6 flex items-center gap-4">
@@ -413,7 +393,7 @@ export default function HomePage() {
                 href="#"
                 className="rounded-xl border border-white/10 bg-white/5 p-3 transition hover:border-orange-500/30 hover:bg-orange-500/10"
               >
-                <GithubLogoIcon  size={20} weight="fill" />
+                <GithubLogoIcon size={20} weight="fill" />
               </Link>
 
               <Link
@@ -427,10 +407,7 @@ export default function HomePage() {
                 href="#"
                 className="rounded-xl border border-white/10 bg-white/5 p-3 transition hover:border-orange-500/30 hover:bg-orange-500/10"
               >
-                <GlobeHemisphereWestIcon
-                  size={20}
-                  weight="fill"
-                />
+                <GlobeHemisphereWestIcon size={20} weight="fill" />
               </Link>
             </div>
           </div>
@@ -440,28 +417,19 @@ export default function HomePage() {
 
             <ul className="space-y-3 text-muted-foreground">
               <li>
-                <Link
-                  href="#features"
-                  className="transition hover:text-white"
-                >
+                <Link href="#features" className="transition hover:text-white">
                   Recursos
                 </Link>
               </li>
 
               <li>
-                <Link
-                  href="#dashboard"
-                  className="transition hover:text-white"
-                >
+                <Link href="#dashboard" className="transition hover:text-white">
                   Dashboard
                 </Link>
               </li>
 
               <li>
-                <Link
-                  href="#stats"
-                  className="transition hover:text-white"
-                >
+                <Link href="#stats" className="transition hover:text-white">
                   Estatísticas
                 </Link>
               </li>
@@ -473,28 +441,19 @@ export default function HomePage() {
 
             <ul className="space-y-3 text-muted-foreground">
               <li>
-                <Link
-                  href="#"
-                  className="transition hover:text-white"
-                >
+                <Link href="#" className="transition hover:text-white">
                   Sobre
                 </Link>
               </li>
 
               <li>
-                <Link
-                  href="#"
-                  className="transition hover:text-white"
-                >
+                <Link href="#" className="transition hover:text-white">
                   Privacidade
                 </Link>
               </li>
 
               <li>
-                <Link
-                  href="#"
-                  className="transition hover:text-white"
-                >
+                <Link href="#" className="transition hover:text-white">
                   Contato
                 </Link>
               </li>
@@ -504,9 +463,7 @@ export default function HomePage() {
 
         <div className="border-t border-white/10">
           <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-6 py-6 text-sm text-muted-foreground md:flex-row">
-            <p>
-              © 2026 Pulse Watch. Todos os direitos reservados.
-            </p>
+            <p>© 2026 Pulse Watch. Todos os direitos reservados.</p>
 
             <div className="flex items-center gap-2 text-emerald-400">
               <CheckCircle className="h-4 w-4" />
