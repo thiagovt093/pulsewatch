@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { monitoringService } from "@/services/monitoring.service";
 import { getErrorMessage } from "@/hooks/useApiError";
+import { toast } from "sonner";
 
 interface Props {
   open: boolean;
@@ -27,7 +28,9 @@ export function AddApiModal({ open, onClose, onSuccess }: Props) {
     timeout: 3000,
   });
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
+  function handleChange(
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) {
     const { name, value } = e.target;
     setForm((prev) => ({
       ...prev,
@@ -43,6 +46,7 @@ export function AddApiModal({ open, onClose, onSuccess }: Props) {
     setError("");
     try {
       await monitoringService.createApi(form);
+      toast.success("API cadastrada com sucesso!");
       onSuccess();
     } catch (err: unknown) {
       setError(getErrorMessage(err));
@@ -71,7 +75,10 @@ export function AddApiModal({ open, onClose, onSuccess }: Props) {
           >
             <div className="mb-6 flex items-center justify-between">
               <h2 className="text-xl font-black">Nova API</h2>
-              <button onClick={onClose} className="text-muted-foreground hover:text-white">
+              <button
+                onClick={onClose}
+                className="text-muted-foreground hover:text-white"
+              >
                 <XIcon size={20} />
               </button>
             </div>
@@ -79,42 +86,73 @@ export function AddApiModal({ open, onClose, onSuccess }: Props) {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="space-y-1">
                 <Label>Nome</Label>
-                <Input name="name" value={form.name} onChange={handleChange}
-                  placeholder="Minha API" required
-                  className="border-white/10 bg-white/5" />
+                <Input
+                  name="name"
+                  value={form.name}
+                  onChange={handleChange}
+                  placeholder="Minha API"
+                  required
+                  className="border-white/10 bg-white/5"
+                />
               </div>
               <div className="space-y-1">
                 <Label>URL</Label>
-                <Input name="url" value={form.url} onChange={handleChange}
-                  placeholder="https://api.exemplo.com/health" required
-                  className="border-white/10 bg-white/5" />
+                <Input
+                  name="url"
+                  value={form.url}
+                  onChange={handleChange}
+                  placeholder="https://api.exemplo.com/health"
+                  required
+                  className="border-white/10 bg-white/5"
+                />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <Label>Método</Label>
-                  <select name="method" value={form.method} onChange={handleChange}
-                    className="w-full rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm">
+                  <select
+                    name="method"
+                    value={form.method}
+                    onChange={handleChange}
+                    className="w-full rounded-md border border-white/10 bg-white/5 px-3 py-2 text-sm"
+                  >
                     {["GET", "POST", "PUT", "DELETE", "PATCH"].map((m) => (
-                      <option key={m} value={m}>{m}</option>
+                      <option key={m} value={m}>
+                        {m}
+                      </option>
                     ))}
                   </select>
                 </div>
                 <div className="space-y-1">
                   <Label>Status esperado</Label>
-                  <Input name="expectedStatusCode" type="number" value={form.expectedStatusCode}
-                    onChange={handleChange} className="border-white/10 bg-white/5" />
+                  <Input
+                    name="expectedStatusCode"
+                    type="number"
+                    value={form.expectedStatusCode}
+                    onChange={handleChange}
+                    className="border-white/10 bg-white/5"
+                  />
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <Label>Intervalo (s)</Label>
-                  <Input name="checkInterval" type="number" value={form.checkInterval}
-                    onChange={handleChange} className="border-white/10 bg-white/5" />
+                  <Input
+                    name="checkInterval"
+                    type="number"
+                    value={form.checkInterval}
+                    onChange={handleChange}
+                    className="border-white/10 bg-white/5"
+                  />
                 </div>
                 <div className="space-y-1">
                   <Label>Timeout (ms)</Label>
-                  <Input name="timeout" type="number" value={form.timeout}
-                    onChange={handleChange} className="border-white/10 bg-white/5" />
+                  <Input
+                    name="timeout"
+                    type="number"
+                    value={form.timeout}
+                    onChange={handleChange}
+                    className="border-white/10 bg-white/5"
+                  />
                 </div>
               </div>
 
@@ -124,9 +162,16 @@ export function AddApiModal({ open, onClose, onSuccess }: Props) {
                 </p>
               )}
 
-              <Button type="submit" disabled={loading}
-                className="w-full rounded-xl bg-orange-500 text-black hover:bg-orange-400">
-                {loading ? <CircleNotchIcon size={18} className="animate-spin" /> : "Cadastrar API"}
+              <Button
+                type="submit"
+                disabled={loading}
+                className="w-full rounded-xl bg-orange-500 text-black hover:bg-orange-400"
+              >
+                {loading ? (
+                  <CircleNotchIcon size={18} className="animate-spin" />
+                ) : (
+                  "Cadastrar API"
+                )}
               </Button>
             </form>
           </motion.div>

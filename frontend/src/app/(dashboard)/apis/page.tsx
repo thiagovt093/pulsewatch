@@ -16,6 +16,7 @@ import { StatusBadge } from "@/components/shared/StatusBadge";
 import Link from "next/link";
 import { AddApiModal } from "@/components/shared/AddApiModal";
 import { getErrorMessage } from "@/hooks/useApiError";
+import { toast } from "sonner";
 export default function ApisPage() {
   const [apis, setApis] = useState<MonitoredApi[]>([]);
   const [loading, setLoading] = useState(true);
@@ -36,12 +37,24 @@ export default function ApisPage() {
   }
 
  async function handleDelete(id: string) {
-  try {
-    await monitoringService.deleteApi(id);
-    setApis((prev) => prev.filter((a) => a.id !== id));
-  } catch (err) {
-    alert(getErrorMessage(err));
-  }
+  toast("Tem certeza que deseja deletar?", {
+    action: {
+      label: "Deletar",
+      onClick: async () => {
+        try {
+          await monitoringService.deleteApi(id);
+          setApis((prev) => prev.filter((a) => a.id !== id));
+          toast.success("API removida com sucesso");
+        } catch (err) {
+          toast.error(getErrorMessage(err));
+        }
+      },
+    },
+    cancel: {
+      label: "Cancelar",
+      onClick: () => {},
+    },
+  });
 }
   return (
     <div className="space-y-8">
