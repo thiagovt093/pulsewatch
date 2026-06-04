@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { authService } from "@/services/auth.service";
+import { getErrorMessage } from "@/hooks/useApiError";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -41,33 +42,7 @@ export default function RegisterPage() {
       await authService.register(name, email, password);
       router.push("/login");
     } catch (err: unknown) {
-      let message = "Credenciais inválidas";
-
-      if (err instanceof Error) {
-        message = err.message;
-      } else if (
-        typeof err === "object" &&
-        err !== null &&
-        "response" in err &&
-        typeof (err as { response?: unknown }).response === "object" &&
-        (err as { response: { data?: unknown } }).response.data !== undefined &&
-        typeof (err as { response: { data?: unknown } }).response.data ===
-          "object" &&
-        (err as { response: { data?: unknown } }).response.data !== null
-      ) {
-        const responseData = (
-          err as { response: { data: { message?: unknown } } }
-        ).response.data;
-
-        if (
-          "message" in responseData &&
-          typeof responseData.message === "string"
-        ) {
-          message = responseData.message;
-        }
-      }
-
-      setError(message);
+     setError(getErrorMessage(err));
     } finally {
       setLoading(false);
     }

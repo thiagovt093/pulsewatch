@@ -15,7 +15,7 @@ import { MonitoredApi } from "@/types";
 import { StatusBadge } from "@/components/shared/StatusBadge";
 import Link from "next/link";
 import { AddApiModal } from "@/components/shared/AddApiModal";
-
+import { getErrorMessage } from "@/hooks/useApiError";
 export default function ApisPage() {
   const [apis, setApis] = useState<MonitoredApi[]>([]);
   const [loading, setLoading] = useState(true);
@@ -35,11 +35,14 @@ export default function ApisPage() {
     setLoading(false);
   }
 
-  async function handleDelete(id: string) {
+ async function handleDelete(id: string) {
+  try {
     await monitoringService.deleteApi(id);
     setApis((prev) => prev.filter((a) => a.id !== id));
+  } catch (err) {
+    alert(getErrorMessage(err));
   }
-
+}
   return (
     <div className="space-y-8">
       <motion.div

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Cookies from "js-cookie";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
@@ -16,6 +17,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { authService } from "@/services/auth.service";
+import { getErrorMessage } from "@/hooks/useApiError";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -34,33 +36,10 @@ export default function LoginPage() {
       const data = await authService.login(email, password);
       localStorage.setItem("token", data.token);
       localStorage.setItem("refreshToken", data.refreshToken);
+      Cookies.set("token", data.token, { expires: 1 });
       router.push("/dashboard");
     } catch (err: unknown) {
-      let message = "Credenciais inválidas";
-
-      if (err instanceof Error) {
-        message = err.message;
-      } else if (
-        typeof err === "object" &&
-        err !== null &&
-        "response" in err &&
-        typeof (err as { response?: unknown }).response === "object" &&
-        (err as { response: { data?: unknown } }).response.data !== undefined &&
-        typeof (err as { response: { data?: unknown } }).response.data === "object" &&
-        (err as { response: { data?: unknown } }).response.data !== null
-      ) {
-        const responseData =
-          (err as { response: { data: { message?: unknown } } }).response.data;
-
-        if (
-          "message" in responseData &&
-          typeof responseData.message === "string"
-        ) {
-          message = responseData.message;
-        }
-      }
-
-      setError(message);
+      setError(getErrorMessage(err));
     } finally {
       setLoading(false);
     }
@@ -87,9 +66,7 @@ export default function LoginPage() {
           </div>
           <div className="text-center">
             <h1 className="text-2xl font-black">Pulse Watch</h1>
-            <p className="text-sm text-muted-foreground">
-              Acesse sua conta
-            </p>
+            <p className="text-sm text-muted-foreground">Acesse sua conta</p>
           </div>
         </div>
 
@@ -102,7 +79,11 @@ export default function LoginPage() {
                 Email
               </Label>
               <div className="relative">
-                <EnvelopeIcon size={20} weight="regular" className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                <EnvelopeIcon
+                  size={20}
+                  weight="regular"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                />
                 <Input
                   id="email"
                   type="email"
@@ -117,11 +98,18 @@ export default function LoginPage() {
 
             {/* Senha */}
             <div className="space-y-2">
-              <Label htmlFor="password" className="text-sm text-muted-foreground">
+              <Label
+                htmlFor="password"
+                className="text-sm text-muted-foreground"
+              >
                 Senha
               </Label>
               <div className="relative">
-                <LockIcon size={20} weight="regular" className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                <LockIcon
+                  size={20}
+                  weight="regular"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+                />
                 <Input
                   id="password"
                   type={showPassword ? "text" : "password"}
@@ -136,7 +124,11 @@ export default function LoginPage() {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-white"
                 >
-                  {showPassword ? <EyeSlashIcon size={20} weight="regular" /> : <EyeIcon size={20} weight="regular" />}
+                  {showPassword ? (
+                    <EyeSlashIcon size={20} weight="regular" />
+                  ) : (
+                    <EyeIcon size={20} weight="regular" />
+                  )}
                 </button>
               </div>
             </div>
@@ -159,7 +151,11 @@ export default function LoginPage() {
               className="w-full rounded-xl bg-orange-500 text-black hover:bg-orange-400 disabled:opacity-50"
             >
               {loading ? (
-                <CircleNotchIcon size={20} weight="regular" className="animate-spin" />
+                <CircleNotchIcon
+                  size={20}
+                  weight="regular"
+                  className="animate-spin"
+                />
               ) : (
                 "Entrar"
               )}

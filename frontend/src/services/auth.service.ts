@@ -1,5 +1,6 @@
 import api from "@/lib/api";
 import { AuthResponse, User } from "@/types";
+import Cookies from "js-cookie";
 
 export const authService = {
   async login(email: string, password: string): Promise<AuthResponse> {
@@ -20,6 +21,7 @@ export const authService = {
   logout() {
     localStorage.removeItem("token");
     localStorage.removeItem("refreshToken");
+    Cookies.remove("token");
     window.location.href = "/login";
   },
 };

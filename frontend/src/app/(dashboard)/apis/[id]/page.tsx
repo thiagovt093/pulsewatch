@@ -28,7 +28,7 @@ export default function ApiDetailPage() {
       setApi(apiData);
       setHistory(historyData.reverse());
       setLoading(false);
-    });
+    }).catch((err) => setLoading(false));
   }, [id]);
 
   if (loading) {

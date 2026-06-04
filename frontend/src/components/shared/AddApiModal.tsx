@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { monitoringService } from "@/services/monitoring.service";
+import { getErrorMessage } from "@/hooks/useApiError";
 
 interface Props {
   open: boolean;
@@ -44,7 +45,7 @@ export function AddApiModal({ open, onClose, onSuccess }: Props) {
       await monitoringService.createApi(form);
       onSuccess();
     } catch (err: unknown) {
-      setError("Erro ao cadastrar API");
+      setError(getErrorMessage(err));
       console.log(err);
     } finally {
       setLoading(false);
